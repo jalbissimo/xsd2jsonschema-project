@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="MAAgentNotification" type="MAAgentNotificationType"/>
+    <xs:simpleType name="emailAddressType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="100"/>
+            <xs:pattern value="[^@ ]+@[^\. ]+\..+|"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="senderDetailsType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="firstName" maxOccurs="1" minOccurs="0"/>
+            <xs:element type="xs:string" name="lastName"/>
+            <xs:element type="emailAddressType" name="email"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="receiverDetailsType">
+        <xs:sequence>
+            <xs:element name="type">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="TO"/>
+                        <xs:enumeration value="CC"/>
+                        <xs:enumeration value="BCC"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element type="xs:string" name="firstName"/>
+            <xs:element type="xs:string" name="lastName"/>
+            <xs:element type="emailAddressType" name="email"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="receiversType">
+        <xs:sequence>
+            <xs:element type="receiverDetailsType" name="receiverDetails" maxOccurs="unbounded" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="customerType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="accountId"/>
+            <xs:element type="xs:string" name="msisdn"/>
+            <xs:element type="xs:string" name="firstName"/>
+            <xs:element type="xs:string" name="lastName"/>
+            <xs:element type="xs:string" name="cnp"/>
+            <xs:element type="xs:string" name="customerCategory"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="orderDetailsType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="id"/>
+            <xs:element type="xs:string" name="flowType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="originatorType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="agentUsername"/>
+            <xs:element type="xs:string" name="agentFirstName" minOccurs="0"/>
+            <xs:element type="xs:string" name="agentLastName" minOccurs="0"/>
+            <xs:element type="xs:string" name="channel"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MAAgentNotificationType">
+        <xs:sequence>
+            <xs:element type="xs:string" minOccurs="0" name="notificationChannel"/>
+            <xs:element type="xs:string" name="eventDescription"/>
+            <xs:element type="xs:string" name="channel"/>
+            <xs:element type="senderDetailsType" name="senderDetails"/>
+            <xs:element type="receiversType" name="receivers"/>
+            <xs:element type="customerType" name="customer"/>
+            <xs:element type="orderDetailsType" name="orderDetails"/>
+            <xs:element type="originatorType" name="orginator"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
